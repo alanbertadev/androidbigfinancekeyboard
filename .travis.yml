@@ -3,11 +3,13 @@ android:
   components:
     # Uncomment the lines below if you want to
     # use the latest revision of Android SDK Tools
-    - platform-tools
-    - tools
+    - android-22
+    - build-tools-22.0.1
 
     # Additional components
     - extra-android-support
+    - extra
+    - add-on
 
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
