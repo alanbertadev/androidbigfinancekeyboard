@@ -1,15 +1,16 @@
-apply plugin: 'com.android.application'
+//apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 24
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.alanbertadev.bigfinancekeyboard"
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        project.archivesBaseName = "bigfinancekeyboard"
     }
     buildTypes {
         release {
