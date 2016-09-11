@@ -22,4 +22,5 @@ deploy:
   file: $TRAVIS_BUILD_DIR/app/build/outputs/aar/bigfinancekeyboard-release.aar
   on:
     repo: alanbertadev/androidbigfinancekeyboard
-    branch: production
+    tags: true
+    all_branches: true
