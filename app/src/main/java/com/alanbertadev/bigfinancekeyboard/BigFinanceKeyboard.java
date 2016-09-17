@@ -13,12 +13,12 @@ public class BigFinanceKeyboard extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_big_finance_keyboard);
 
-        TextView helloWorld = (TextView)findViewById(R.id.helloworldtextview);
+        TextView helloWorld = (TextView)findViewById(R.id.ok_button);
         helloWorld.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent result = new Intent("com.alanbertadev.bigfinancekeyboard.RESULT_ACTION");
-                result.putExtra("value", 5);
+                result.putExtra("value", "0.00");
                 setResult(Activity.RESULT_OK, result);
                 finish();
             }
