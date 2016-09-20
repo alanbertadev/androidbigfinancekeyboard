@@ -16,17 +16,39 @@ public class BigFinanceKeyboard extends Activity {
 
     private Stack<Integer> figures = new Stack<>();
 
+    private String currentValue = "0.00";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_big_finance_keyboard);
 
-        TextView helloWorld = (TextView)findViewById(R.id.ok_button);
-        helloWorld.setOnClickListener(new View.OnClickListener() {
+        // setup numeric keys
+        setupKeyboardKey(R.id.zero_button, 0);
+        setupKeyboardKey(R.id.one_button, 1);
+        setupKeyboardKey(R.id.two_button, 2);
+        setupKeyboardKey(R.id.three_button, 3);
+        setupKeyboardKey(R.id.four_button, 4);
+        setupKeyboardKey(R.id.five_button, 5);
+        setupKeyboardKey(R.id.six_button, 6);
+        setupKeyboardKey(R.id.seven_button, 7);
+        setupKeyboardKey(R.id.eight_button, 8);
+        setupKeyboardKey(R.id.nine_button, 9);
+
+        TextView delButton = (TextView)findViewById(R.id.del_button);
+        delButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popFigure();
+            }
+        });
+
+        TextView okButton = (TextView)findViewById(R.id.ok_button);
+        okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent result = new Intent("com.alanbertadev.bigfinancekeyboard.RESULT_ACTION");
-                result.putExtra("value", "0.00");
+                result.putExtra("value", currentValue);
                 setResult(Activity.RESULT_OK, result);
                 finish();
             }
@@ -36,12 +58,23 @@ public class BigFinanceKeyboard extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        financialOutputTextView = (TextView)findViewById(R.id.financialoutput);
+        this.financialOutputTextView = (TextView)findViewById(R.id.financialoutput);
     }
 
-    private boolean pushFigure(final Integer figure) {
-        if(figures.size() < MAX_CURSOR_POSITION) {
-            figures.push(figure);
+    private void setupKeyboardKey(final int resourceId, final int figure)
+    {
+        final TextView key = (TextView)findViewById(resourceId);
+        key.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pushFigure(figure);
+            }
+        });
+    }
+
+    private boolean pushFigure(final int figure) {
+        if(this.figures.size() < MAX_CURSOR_POSITION) {
+            this.figures.push(figure);
             refreshUI();
             return true;
         } else {
@@ -50,10 +83,10 @@ public class BigFinanceKeyboard extends Activity {
     }
 
     private boolean popFigure() {
-        if(figures.empty()) {
+        if(this.figures.empty()) {
             return false;
         } else {
-            figures.pop();
+            this.figures.pop();
             refreshUI();
             return true;
         }
@@ -61,8 +94,7 @@ public class BigFinanceKeyboard extends Activity {
 
     private void refreshUI() {
         StringBuilder value = new StringBuilder();
-        value.append("$");
-        switch(figures.size()) {
+        switch(this.figures.size()) {
             case 2:
                 value.append("0");
                 break;
@@ -75,12 +107,14 @@ public class BigFinanceKeyboard extends Activity {
             default:
                 break;
         }
-        for(int i=0; i<figures.size(); i++) {
-            if(i==(figures.size()-2)) {
+        for(int i=0; i<this.figures.size(); i++) {
+            if(i==(this.figures.size()-2)) {
                 value.append(".");
             }
-            value.append(figures.elementAt(i));
+            value.append(this.figures.elementAt(i));
         }
-        financialOutputTextView.setText(value.toString());
+        this.currentValue = value.toString();
+        value.insert(0,"$");
+        this.financialOutputTextView.setText(value.toString());
     }
 }
