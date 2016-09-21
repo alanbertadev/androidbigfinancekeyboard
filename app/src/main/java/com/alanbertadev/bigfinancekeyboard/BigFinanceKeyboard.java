@@ -92,16 +92,12 @@ public class BigFinanceKeyboard extends Activity {
         try {
             for (int i=0; i<this.currentValue.length(); i++) {
                 if(this.currentValue.charAt(i) != '.') {
-                    figures.push(Integer.parseInt(String.valueOf(this.currentValue.charAt(i))));
+                    this.figures.push(Integer.parseInt(String.valueOf(this.currentValue.charAt(i))));
                 }
             }
         } catch (final NumberFormatException error) {
-            figures.clear();
+            this.figures.clear();
             this.currentValue = DEFAULT_VALUE;
-        }
-
-        if(this.currentValue.equals(DEFAULT_VALUE)) {
-            figures.clear();
         }
         refreshUI();
     }
@@ -117,6 +113,9 @@ public class BigFinanceKeyboard extends Activity {
     }
 
     private boolean pushFigure(final int figure) {
+        if(this.figures.elementAt(0).equals(0)) {
+            this.figures.remove(0);
+        }
         if (this.figures.size() < MAX_CURSOR_POSITION) {
             this.figures.push(figure);
             refreshUI();
