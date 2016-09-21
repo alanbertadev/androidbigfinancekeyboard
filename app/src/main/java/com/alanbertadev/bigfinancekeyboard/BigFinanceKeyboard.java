@@ -66,7 +66,7 @@ public class BigFinanceKeyboard extends Activity {
         this.financialOutputTextView = (TextView)findViewById(R.id.financialoutput);
 
         final Intent intent = getIntent();
-        this.isAmountOnly = intent.getBooleanExtra(INTENT_SUPPRESS_FINANCIAL_INDICATOR_KEY, true);
+        this.isAmountOnly = intent.getBooleanExtra(INTENT_SUPPRESS_FINANCIAL_INDICATOR_KEY, false);
         setupViewWithInput(intent.getStringExtra(INTENT_EXTRA_KEY));
     }
 
