@@ -31,7 +31,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:background="@color/ripple_material_light"
+        android:background="@color/bfkkeyboardcolor"
         android:orientation="vertical">
 
         <LinearLayout
@@ -46,6 +46,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/one_button"
                 android:text="1"
+                android:background="@drawable/key_background_state"
                 android:layout_weight=".33"
                 android:gravity="center"
                 android:textSize="18pt"/>
@@ -54,7 +55,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/two_button"
+                android:background="@drawable/key_background_state"
                 android:text="2"
+                android:layout_marginLeft="@dimen/button_margin"
+                android:layout_marginRight="@dimen/button_margin"
                 android:layout_weight=".33"
                 android:gravity="center"
                 android:textSize="18pt"/>
@@ -63,6 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/three_button"
+                android:background="@drawable/key_background_state"
                 android:text="3"
                 android:layout_weight=".33"
                 android:gravity="center"
@@ -74,6 +79,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:background="@color/bfkkeyboardcolor"
+            android:layout_marginTop="@dimen/button_margin"
             android:layout_weight=".25"
             android:orientation="horizontal">
 
@@ -82,6 +89,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/four_button"
                 android:text="4"
+                android:background="@drawable/key_background_state"
                 android:layout_weight=".33"
                 android:gravity="center"
                 android:textSize="18pt"/>
@@ -91,7 +99,10 @@
                 android:layout_height="match_parent"
                 android:id="@+id/five_button"
                 android:text="5"
+                android:background="@drawable/key_background_state"
                 android:layout_weight=".33"
+                android:layout_marginLeft="@dimen/button_margin"
+                android:layout_marginRight="@dimen/button_margin"
                 android:gravity="center"
                 android:textSize="18pt"/>
 
@@ -100,6 +111,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/six_button"
                 android:text="6"
+                android:background="@drawable/key_background_state"
                 android:layout_weight=".33"
                 android:gravity="center"
                 android:textSize="18pt"/>
@@ -110,6 +122,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:background="@color/bfkkeyboardcolor"
+            android:layout_marginTop="@dimen/button_margin"
             android:layout_weight=".25"
             android:orientation="horizontal">
 
@@ -118,6 +132,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/seven_button"
                 android:text="7"
+                android:background="@drawable/key_background_state"
                 android:layout_weight=".33"
                 android:gravity="center"
                 android:textSize="18pt"/>
@@ -127,6 +142,9 @@
                 android:layout_height="match_parent"
                 android:id="@+id/eight_button"
                 android:text="8"
+                android:background="@drawable/key_background_state"
+                android:layout_marginLeft="@dimen/button_margin"
+                android:layout_marginRight="@dimen/button_margin"
                 android:layout_weight=".33"
                 android:gravity="center"
                 android:textSize="18pt"/>
@@ -136,6 +154,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/nine_button"
                 android:text="9"
+                android:background="@drawable/key_background_state"
                 android:layout_weight=".33"
                 android:gravity="center"
                 android:textSize="18pt"/>
@@ -146,6 +165,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:background="@color/bfkkeyboardcolor"
+            android:layout_marginTop="@dimen/button_margin"
             android:layout_weight=".25"
             android:orientation="horizontal">
 
@@ -154,6 +175,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/del_button"
                 android:text="DEL"
+                android:background="@drawable/key_background_state"
                 android:layout_weight=".33"
                 android:gravity="center"
                 android:textSize="18pt"/>
@@ -163,6 +185,9 @@
                 android:layout_height="match_parent"
                 android:id="@+id/zero_button"
                 android:text="0"
+                android:layout_marginLeft="@dimen/button_margin"
+                android:layout_marginRight="@dimen/button_margin"
+                android:background="@drawable/key_background_state"
                 android:layout_weight=".33"
                 android:gravity="center"
                 android:textSize="18pt"/>
@@ -172,6 +197,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/ok_button"
                 android:text="OK"
+                android:background="@drawable/key_background_state"
                 android:layout_weight=".33"
                 android:gravity="center"
                 android:textSize="18pt"/>

@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="bfkcashcolor">#ADCD5C</color>
+    <color name="bfkkeyboardcolor">#ffffff</color>
+    <color name="bfkkeyboardkeycolor">#dddddd</color>
+    <color name="bfkkeyboardkeycolor_pressed">#999999</color>
 </resources>
