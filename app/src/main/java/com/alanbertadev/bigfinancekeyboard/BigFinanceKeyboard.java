@@ -11,6 +11,7 @@ import java.util.Stack;
 public class BigFinanceKeyboard extends Activity {
 
     public final static String INTENT_EXTRA_KEY = "value";
+    public final static String INTENT_SUPPRESS_FINANCIAL_INDICATOR_KEY = "isamountonly";
 
     private final static int MAX_CURSOR_POSITION = 11; //100,000,000.00
     private final static String DEFAULT_VALUE = "0.00";
@@ -20,6 +21,7 @@ public class BigFinanceKeyboard extends Activity {
     private Stack<Integer> figures = new Stack<>();
 
     private String currentValue = DEFAULT_VALUE;
+    private boolean isAmountOnly = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class BigFinanceKeyboard extends Activity {
         this.financialOutputTextView = (TextView)findViewById(R.id.financialoutput);
 
         final Intent intent = getIntent();
+        this.isAmountOnly = intent.getBooleanExtra(INTENT_SUPPRESS_FINANCIAL_INDICATOR_KEY, false);
         setupViewWithInput(intent.getStringExtra(INTENT_EXTRA_KEY));
     }
 
@@ -92,16 +95,12 @@ public class BigFinanceKeyboard extends Activity {
         try {
             for (int i=0; i<this.currentValue.length(); i++) {
                 if(this.currentValue.charAt(i) != '.') {
-                    figures.push(Integer.parseInt(String.valueOf(this.currentValue.charAt(i))));
+                    this.figures.push(Integer.parseInt(String.valueOf(this.currentValue.charAt(i))));
                 }
             }
         } catch (final NumberFormatException error) {
-            figures.clear();
+            this.figures.clear();
             this.currentValue = DEFAULT_VALUE;
-        }
-
-        if(this.currentValue.equals(DEFAULT_VALUE)) {
-            figures.clear();
         }
         refreshUI();
     }
@@ -117,6 +116,9 @@ public class BigFinanceKeyboard extends Activity {
     }
 
     private boolean pushFigure(final int figure) {
+        if(this.figures.elementAt(0).equals(0)) {
+            this.figures.remove(0);
+        }
         if (this.figures.size() < MAX_CURSOR_POSITION) {
             this.figures.push(figure);
             refreshUI();
@@ -158,7 +160,9 @@ public class BigFinanceKeyboard extends Activity {
             value.append(this.figures.elementAt(i));
         }
         this.currentValue = value.toString();
-        value.insert(0, "$");
+        if(!this.isAmountOnly) {
+            value.insert(0, "$");
+        }
         this.financialOutputTextView.setText(value.toString());
     }
 }
