@@ -116,7 +116,7 @@ public class BigFinanceKeyboard extends Activity {
     }
 
     private boolean pushFigure(final int figure) {
-        if(this.figures.elementAt(0).equals(0)) {
+        if(this.figures.size()>0 && this.figures.elementAt(0).equals(0)) {
             this.figures.remove(0);
         }
         if (this.figures.size() < MAX_CURSOR_POSITION) {
