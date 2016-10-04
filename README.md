@@ -8,7 +8,7 @@ A big keyboard for entering financial values
 # How to get started!
 
 1) Add dl.bintray.com to your repositories and include the aar library as a dependency in your build.gradle
-```
+```Gradle
     allprojects {
         repositories {
             jcenter()
@@ -24,7 +24,7 @@ A big keyboard for entering financial values
 ```
 
 2) Add the following to your AndroidManifest.xml
-```
+```XML
         <activity
             android:name="com.alanbertadev.bigfinancekeyboard.BigFinanceKeyboard"
             android:label="@string/app_name"
