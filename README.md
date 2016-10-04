@@ -38,7 +38,7 @@ A big keyboard for entering financial values
     startActivityForResult(bfkIntent, 0);
 ```
 
-4)Receive the result on your Activity's onActivityResult method invocation
+4) Receive the result on your Activity's onActivityResult invocation
 ```Java
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
