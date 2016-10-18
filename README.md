@@ -21,7 +21,7 @@ A big keyboard for entering financial values
     }
 
     dependencies {
-        compile 'alanbertadev.Tools:bigfinancekeyboard-release:0.2.2@aar'
+        compile 'alanbertadev.Tools:bigfinancekeyboard-release:0.2.3@aar'
     }
 ```
 
