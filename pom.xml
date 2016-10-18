@@ -4,7 +4,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
  
 <groupId>com.alanbertadev</groupId>
 <artifactId>bigfinancekeyboard</artifactId>
-<version>0.2.2</version>
+<version>0.2.3</version>
 <packaging>aar</packaging>
  
 <name>Big Finance Keyboard for Android</name>
