@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.Stack;
 
 public class BigFinanceKeyboard extends Activity {
@@ -19,8 +23,8 @@ public class BigFinanceKeyboard extends Activity {
     private TextView financialOutputTextView;
 
     private Stack<Integer> figures = new Stack<>();
+    private BigDecimal bigDecimalValue = BigDecimal.ZERO;
 
-    private String currentValue = DEFAULT_VALUE;
     private boolean isAmountOnly = false;
 
     @Override
@@ -53,7 +57,7 @@ public class BigFinanceKeyboard extends Activity {
             @Override
             public void onClick(View view) {
                 Intent result = new Intent("com.alanbertadev.bigfinancekeyboard.RESULT_ACTION");
-                result.putExtra(INTENT_EXTRA_KEY, currentValue);
+                result.putExtra(INTENT_EXTRA_KEY, bigDecimalValue.toString());
                 setResult(Activity.RESULT_OK, result);
                 finish();
             }
@@ -71,37 +75,38 @@ public class BigFinanceKeyboard extends Activity {
     }
 
     private void setupViewWithInput(final String input) {
-        this.currentValue = input;
+        String currentValue = input;
         // input to the finance keyboard must be less than MAX_CURSOR_POSITION and contain only numbers and 1 decimal
-        if ((this.currentValue == null) ||
-                (this.currentValue.length() > MAX_CURSOR_POSITION)
-                || !(this.currentValue.matches("^[0-9]*\\.?[0-9]*$"))) {
-            this.currentValue = DEFAULT_VALUE;
+        if ((currentValue == null) ||
+                (currentValue.length() > MAX_CURSOR_POSITION)
+                || !(currentValue.matches("^[0-9]*\\.?[0-9]*$"))) {
+            currentValue = DEFAULT_VALUE;
         }
 
         // if there is no period, append the current value with 0 change
-        if(!this.currentValue.contains(".")) {
-            this.currentValue = this.currentValue + ".00";
+        if(!currentValue.contains(".")) {
+            currentValue = currentValue + ".00";
         }
 
         // scrub fuzzy decimal placement
-        if (this.currentValue.charAt(this.currentValue.length() - 1) == '.') {
-            this.currentValue = this.currentValue + "00";
-        } else if (this.currentValue.charAt(this.currentValue.length() - 2) == '.') {
-            this.currentValue = this.currentValue + "0";
+        if (currentValue.charAt(currentValue.length() - 1) == '.') {
+            currentValue = currentValue + "00";
+        } else if (currentValue.charAt(currentValue.length() - 2) == '.') {
+            currentValue = currentValue + "0";
         }
 
         // build entry stack from input
         try {
-            for (int i=0; i<this.currentValue.length(); i++) {
-                if(this.currentValue.charAt(i) != '.') {
-                    this.figures.push(Integer.parseInt(String.valueOf(this.currentValue.charAt(i))));
+            for (int i=0; i<currentValue.length(); i++) {
+                if(currentValue.charAt(i) != '.') {
+                    this.figures.push(Integer.parseInt(String.valueOf(currentValue.charAt(i))));
                 }
             }
         } catch (final NumberFormatException error) {
             this.figures.clear();
-            this.currentValue = DEFAULT_VALUE;
+            currentValue = DEFAULT_VALUE;
         }
+        bigDecimalValue = new BigDecimal(currentValue);
         refreshUI();
     }
 
@@ -139,30 +144,24 @@ public class BigFinanceKeyboard extends Activity {
     }
 
     private void refreshUI() {
-        StringBuilder value = new StringBuilder();
-        switch (this.figures.size()) {
-            case 2:
-                value.append("0");
-                break;
-            case 1:
-                value.append("0.0");
-                break;
-            case 0:
-                value.append("0.00");
-                break;
-            default:
-                break;
+        bigDecimalValue = BigDecimal.ZERO;
+        for (int i=0; i<this.figures.size(); i++) {
+            final BigDecimal shiftThisValue = new BigDecimal(this.figures.get((this.figures.size()-1-i)));
+            bigDecimalValue = bigDecimalValue.add(shiftThisValue.movePointRight(i));
         }
-        for (int i = 0; i < this.figures.size(); i++) {
-            if (i == (this.figures.size() - 2)) {
-                value.append(".");
-            }
-            value.append(this.figures.elementAt(i));
+        bigDecimalValue = bigDecimalValue.movePointLeft(2);
+        if(this.isAmountOnly) {
+            this.financialOutputTextView.setText(getNumberFormatWithoutCurrencySymbol(bigDecimalValue));
+        } else {
+            this.financialOutputTextView.setText(NumberFormat.getCurrencyInstance().format(bigDecimalValue));
         }
-        this.currentValue = value.toString();
-        if(!this.isAmountOnly) {
-            value.insert(0, "$");
-        }
-        this.financialOutputTextView.setText(value.toString());
+    }
+
+    private String getNumberFormatWithoutCurrencySymbol(final BigDecimal bigDecimal) {
+        NumberFormat nf = NumberFormat.getCurrencyInstance();
+        DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) nf).getDecimalFormatSymbols();
+        decimalFormatSymbols.setCurrencySymbol("");
+        ((DecimalFormat) nf).setDecimalFormatSymbols(decimalFormatSymbols);
+        return nf.format(bigDecimal).trim();
     }
 }
