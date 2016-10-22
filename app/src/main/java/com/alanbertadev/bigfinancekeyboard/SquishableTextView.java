@@ -51,17 +51,29 @@ public class SquishableTextView extends TextView {
         return (int)TypedValue.applyDimension(unit, size, metrics);
     }
 
+    private float measureAndReturnTextWidth(final String text, final float textSize) {
+        this.getPaint().setTextSize(getPixels(TypedValue.COMPLEX_UNIT_SP, textSize));
+        return this.getPaint().measureText(text);
+    }
+
     @Override
     public void setText(CharSequence text, BufferType type) {
-        if(currentWidth!=0) {
-            currentTextSize = FORCED_MAXIMUM_TEXT_SIZE;
-            float textWidthMeasurement = currentWidth + 1;
-            Paint paint = this.getPaint();
-            while(textWidthMeasurement > currentWidth) {
-                paint.setTextSize(getPixels(TypedValue.COMPLEX_UNIT_SP, currentTextSize));
-                textWidthMeasurement = paint.measureText(text.toString());
-                if(textWidthMeasurement > currentWidth) {
-                    currentTextSize--;
+        if(this.currentWidth!=0 && text!=null) {
+            final int newTextLength = text.toString().length();
+            final int currentTextLength = this.getText().toString().length();
+            if(newTextLength > currentTextLength) {
+                // add character
+                float textWidthMeasurement = measureAndReturnTextWidth(text.toString(), this.currentTextSize);
+                while(textWidthMeasurement > this.currentWidth) {
+                    this.currentTextSize--;
+                    textWidthMeasurement = measureAndReturnTextWidth(text.toString(), this.currentTextSize);
+                }
+            } else if(newTextLength < currentTextLength) {
+                // subtract character
+                float textWidthMeasurement = measureAndReturnTextWidth(text.toString(), this.currentTextSize);
+                while((textWidthMeasurement <= this.currentWidth) && (this.currentTextSize <= FORCED_MAXIMUM_TEXT_SIZE)) {
+                    this.currentTextSize++;
+                    textWidthMeasurement = measureAndReturnTextWidth(text.toString(), this.currentTextSize);
                 }
             }
         }
