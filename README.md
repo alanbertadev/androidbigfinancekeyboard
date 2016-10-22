@@ -21,23 +21,18 @@ A big keyboard for entering financial values
     }
 
     dependencies {
-        compile 'alanbertadev.Tools:bigfinancekeyboard-release:0.2.3@aar'
+        compile 'alanbertadev.Tools:bigfinancekeyboard-release:0.2.4@aar'
     }
 ```
 
 2) Add the following to your AndroidManifest.xml
 ```XML
-    <activity
-        android:name="com.alanbertadev.bigfinancekeyboard.BigFinanceKeyboard"
-        android:label="@string/app_name"
-        android:theme="@style/noAnimTheme">
-    </activity>
+    <activity android:name="com.alanbertadev.bigfinancekeyboard.BigFinanceKeyboard" />
 ```
 
 3) Invoke the keyboard in your desired Activity
 ```Java
-    Intent bfkIntent = new Intent(getActivity(), BigFinanceKeyboard.class);
-    startActivityForResult(bfkIntent, 0);
+    startActivityForResult(new Intent(getActivity(), BigFinanceKeyboard.class), 0);
 ```
 
 4) Receive the result on your Activity's onActivityResult invocation
