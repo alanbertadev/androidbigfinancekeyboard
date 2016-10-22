@@ -14,13 +14,13 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
+        <com.alanbertadev.bigfinancekeyboard.SquishableTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/financialoutput"
             android:fontFamily="monospace"
-            android:textSize="26pt"
             android:gravity="right"
+            android:maxLines="1"
             android:textColor="@color/bfkcashcolor"
             android:text="$0.00"/>
 
